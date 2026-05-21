@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunar Economy - Armor Trims Overhaul Wiki</title>
+    <meta name="description" content="Complete guide to Armor Trim abilities, unlock quests, material stats, empowerment materials, and power scaling in the Lunar Economy mod.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-grad-1: #0f172a;
+            --bg-grad-2: #1e1b4b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #8b5cf6;
+            --accent-glow: rgba(139, 92, 246, 0.5);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-hover: rgba(255, 255, 255, 0.06);
+            --gold: #fbbf24;
+            --emerald: #34d399;
+            --ruby: #f43f5e;
+            --sapphire: #60a5fa;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+            padding-bottom: 5rem;
+        }
+        .header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            position: relative;
+        }
+        .header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #a78bfa 0%, #c084fc 50%, #f0abfc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 0 30px var(--accent-glow));
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(139,92,246,0.4)); }
+            to   { filter: drop-shadow(0 0 40px rgba(139,92,246,0.7)); }
+        }
+        .header p { font-size: 1.15rem; color: var(--text-muted); max-width: 700px; margin: 0 auto; }
+        .lang-toggle {
+            position: absolute; top: 2rem; right: 2rem;
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 20px; padding: 0.5rem; display: flex; gap: 0.5rem;
+            backdrop-filter: blur(10px);
+        }
+        .lang-btn {
+            background: transparent; border: none; color: var(--text-muted);
+            padding: 0.5rem 1rem; border-radius: 15px; cursor: pointer;
+            font-weight: 600; transition: all 0.3s ease; font-size: 0.95rem;
+        }
+        .lang-btn.active {
+            background: var(--accent); color: white;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+        .section-title {
+            font-family: 'Outfit', sans-serif; font-size: 2.2rem;
+            margin: 3.5rem 0 1.5rem; padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--card-border); display: inline-block;
+        }
+        .section-desc { color: var(--text-muted); margin-bottom: 2rem; max-width: 900px; font-size: 1.05rem; }
+
+        /* Navigation */
+        .nav-bar {
+            display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
+            padding: 1rem 2rem; margin-bottom: 1rem;
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+        }
+        .nav-link {
+            color: var(--text-muted); text-decoration: none; font-size: 0.9rem;
+            font-weight: 600; padding: 0.4rem 1rem; border-radius: 12px;
+            transition: all 0.2s ease; border: 1px solid transparent;
+        }
+        .nav-link:hover { color: #fff; background: rgba(139,92,246,0.15); border-color: rgba(139,92,246,0.3); }
+
+        /* Info Boxes */
+        .info-box {
+            background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.2);
+            border-radius: 16px; padding: 2rem; margin-bottom: 2rem;
+        }
+        .info-box h3 { font-family: 'Outfit', sans-serif; font-size: 1.4rem; margin-bottom: 0.8rem; color: #c084fc; }
+        .info-box p, .info-box li { color: var(--text-muted); font-size: 1rem; }
+        .info-box ul { list-style: none; padding: 0; }
+        .info-box li { padding: 0.4rem 0; padding-left: 1.5rem; position: relative; }
+        .info-box li::before { content: '▪'; position: absolute; left: 0; }
+
+        /* Scaling Table */
+        .scale-table {
+            width: 100%; border-collapse: collapse; margin: 1rem 0;
+            background: rgba(0,0,0,0.2); border-radius: 12px; overflow: hidden;
+        }
+        .scale-table th, .scale-table td {
+            padding: 0.8rem 1.2rem; text-align: center; border-bottom: 1px solid var(--card-border);
+        }
+        .scale-table th { background: rgba(139,92,246,0.15); color: #c084fc; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .scale-table td { color: var(--text-main); font-size: 1rem; }
+        .scale-table tr:last-child td { border-bottom: none; }
+        .highlight-row td { background: rgba(139,92,246,0.1); font-weight: 600; color: #c084fc !important; }
+
+        /* Trim Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 2rem; }
+        .card {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 24px; padding: 2rem; backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        .card:hover {
+            transform: translateY(-8px); background: var(--card-hover);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 25px var(--accent-glow);
+        }
+        .card-header { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.2rem; }
+        .trim-img { width: 64px; height: 64px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6)); image-rendering: pixelated; }
+        .card h3 { font-family: 'Outfit', sans-serif; font-size: 1.7rem; color: #fff; }
+        .badge {
+            display: inline-block; background: rgba(139,92,246,0.2); color: #d8b4fe;
+            padding: 0.25rem 0.7rem; border-radius: 10px; font-size: 0.8rem;
+            font-weight: 600; margin-bottom: 0.8rem; border: 1px solid rgba(139,92,246,0.3);
+        }
+        .badge-emp {
+            background: rgba(251,191,36,0.15); color: var(--gold);
+            border-color: rgba(251,191,36,0.3);
+        }
+        .info-row { margin-bottom: 0.8rem; }
+        .info-label {
+            color: var(--accent); font-weight: 700; font-size: 0.8rem;
+            text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.15rem;
+        }
+        .info-value { color: var(--text-main); font-size: 0.98rem; }
+        .divider { margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px solid var(--card-border); }
+        .emp-text { color: var(--gold); font-weight: 600; }
+        .sig-text { color: #a78bfa; font-size: 0.85rem; margin-top: 0.5rem; font-weight: 600; }
+        .sig-value { color: #fff; }
+        .activation-tag {
+            display: inline-block; background: rgba(52,211,153,0.12); color: var(--emerald);
+            padding: 0.2rem 0.6rem; border-radius: 8px; font-size: 0.75rem;
+            font-weight: 600; border: 1px solid rgba(52,211,153,0.25); margin-top: 0.3rem;
+        }
+        .cooldown-tag {
+            display: inline-block; background: rgba(96,165,250,0.12); color: var(--sapphire);
+            padding: 0.2rem 0.6rem; border-radius: 8px; font-size: 0.75rem;
+            font-weight: 600; border: 1px solid rgba(96,165,250,0.25); margin-left: 0.4rem;
+        }
+
+        /* Materials */
+        .materials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        .material-card {
+            background: rgba(0,0,0,0.2); border: 1px solid var(--card-border);
+            border-radius: 16px; padding: 1.5rem; display: flex; align-items: flex-start;
+            gap: 1rem; transition: all 0.3s ease;
+        }
+        .material-card:hover { border-color: var(--accent); background: rgba(139,92,246,0.1); transform: translateY(-4px); }
+        .mat-img { width: 48px; height: 48px; image-rendering: pixelated; flex-shrink: 0; margin-top: 0.2rem; }
+
+        /* Empowerment Cards */
+        .emp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 1.5rem; }
+        .emp-card {
+            background: rgba(251,191,36,0.04); border: 1px solid rgba(251,191,36,0.15);
+            border-radius: 16px; padding: 1.5rem; transition: all 0.3s ease;
+        }
+        .emp-card:hover { border-color: var(--gold); background: rgba(251,191,36,0.08); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .emp-card h4 { font-family: 'Outfit', sans-serif; font-size: 1.2rem; color: var(--gold); margin-bottom: 0.5rem; }
+        .emp-card .emp-mat { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.3rem; }
+        .emp-card .emp-effect { color: var(--text-main); font-size: 0.95rem; }
+
+        /* Admin Command */
+        .cmd-box {
+            background: rgba(0,0,0,0.4); border: 1px solid var(--card-border);
+            border-radius: 12px; padding: 1rem 1.5rem; font-family: 'Courier New', monospace;
+            font-size: 1rem; color: var(--emerald); margin: 0.5rem 0; overflow-x: auto;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center; padding: 3rem 2rem 2rem; color: var(--text-muted);
+            font-size: 0.9rem; border-top: 1px solid var(--card-border); margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.2rem; }
+            .grid, .emp-grid { grid-template-columns: 1fr; }
+            .materials-grid { grid-template-columns: 1fr; }
+            .lang-toggle { position: static; justify-content: center; margin: 0 auto 2rem; width: max-content; }
+            .header { padding-top: 2rem; }
+            .nav-bar { gap: 0.3rem; }
+            .nav-link { font-size: 0.75rem; padding: 0.3rem 0.6rem; }
+            .scale-table { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="lang-toggle">
+            <button class="lang-btn active" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" onclick="setLang('vi')">VI</button>
+        </div>
+        <h1 id="title">Armor Trims Overhaul Wiki</h1>
+        <p id="subtitle">Complete guide to Trim Abilities, Unlock Tasks, Material Stats, Empowerment System & Power Scaling</p>
+    </div>
+
+    <nav class="nav-bar" id="nav-bar">
+        <a class="nav-link" href="#overview-section">Overview</a>
+        <a class="nav-link" href="#scaling-section">Scaling</a>
+        <a class="nav-link" href="#patterns-section">Trims (18)</a>
+        <a class="nav-link" href="#materials-section">Materials (11)</a>
+        <a class="nav-link" href="#empowerment-section">Empowerments</a>
+        <a class="nav-link" href="#commands-section">Commands</a>
+    </nav>
+
+    <div class="container">
+        <!-- OVERVIEW -->
+        <div id="overview-section">
+            <h2 class="section-title" id="overview-title">Overview</h2>
+            <div id="overview-desc" class="section-desc"></div>
+            <div class="info-box" id="overview-box"></div>
+        </div>
+
+        <!-- SCALING -->
+        <div id="scaling-section">
+            <h2 class="section-title" id="scaling-title">Power Scaling</h2>
+            <div id="scaling-desc" class="section-desc"></div>
+            <div id="scaling-table-wrap"></div>
+        </div>
+
+        <!-- PATTERNS -->
+        <div id="patterns-section">
+            <h2 class="section-title" id="patterns-title">Trim Patterns & Abilities</h2>
+            <div id="patterns-desc" class="section-desc"></div>
+            <div class="grid" id="patterns-grid"></div>
+        </div>
+
+        <!-- MATERIALS -->
+        <div id="materials-section">
+            <h2 class="section-title" id="materials-title">Material Stats & Synergies</h2>
+            <div id="materials-desc" class="section-desc"></div>
+            <div class="materials-grid" id="materials-grid"></div>
+        </div>
+
+        <!-- EMPOWERMENTS -->
+        <div id="empowerment-section">
+            <h2 class="section-title" id="emp-title">Empowerment Materials</h2>
+            <div id="emp-desc" class="section-desc"></div>
+            <div class="emp-grid" id="emp-grid"></div>
+        </div>
+
+        <!-- COMMANDS -->
+        <div id="commands-section">
+            <h2 class="section-title" id="cmd-title">Admin Commands</h2>
+            <div id="cmd-content"></div>
+        </div>
+    </div>
+
+    <footer class="footer" id="footer-text">Lunar Economy Mod — Armor Trims Overhaul v2.0 — 2025</footer>
+
+<script>
+const i18n = {
+    en: {
+        title: "Armor Trims Overhaul Wiki",
+        subtitle: "Complete guide to Trim Abilities, Unlock Tasks, Material Stats, Empowerment System & Power Scaling",
+        // Section titles
+        overviewTitle: "Overview",
+        scalingTitle: "Power Scaling",
+        patternsTitle: "Trim Patterns & Abilities (18)",
+        materialsTitle: "Material Stats & Synergies (11)",
+        empTitle: "Empowerment Materials (18)",
+        cmdTitle: "Admin Commands",
+        // Labels
+        task: "Unlock Quest",
+        ability: "Ability",
+        signature: "Signature Bonus (Empowered)",
+        empowered: "Empowered By",
+        stats: "Full Set Bonus (4 pieces)",
+        activation: "Activation",
+        cooldown: "Cooldown",
+        passive: "Passive",
+        // Overview
+        overviewDesc: "The Armor Trims Overhaul transforms Minecraft's cosmetic trim system into a full-blown RPG ability system. Each of the 18 trim patterns grants unique active and passive abilities. Materials provide powerful stat bonuses. Matching a trim with its signature empowerment material unlocks devastating upgraded abilities.",
+        overviewBox: `<h3>How It Works</h3>
+            <ul>
+                <li><b>Equip armor with trims</b> — Each piece counts! More pieces = more power (25% per piece).</li>
+                <li><b>Complete Unlock Quests</b> — Each trim pattern requires a specific quest to unlock its abilities.</li>
+                <li><b>Choose your Material</b> — Different materials grant different stat bonuses (damage, health, speed, etc.).</li>
+                <li><b>Empowerment</b> — Use the signature material with its matching trim to unlock the ultimate empowered ability.</li>
+                <li><b>Mix & Match</b> — You can combine different trims and materials across your 4 armor slots for hybrid builds.</li>
+                <li><b>Dragon Egg</b> — A wildcard material that copies the majority material, helping you complete sets.</li>
+            </ul>`,
+        // Scaling
+        scalingDesc: "All trim abilities and stat bonuses scale with the number of armor pieces equipped with that pattern or material. The more pieces, the stronger the effect.",
+        scalingHeaders: ["Pieces Equipped", "Power Level", "Stat Multiplier", "Cooldown Modifier", "Example: Diamond Toughness"],
+        scalingRows: [
+            ["1 piece", "25%", "×0.25", "×2.5 (longer)", "+1.75"],
+            ["2 pieces", "50%", "×0.50", "×2.0", "+3.50"],
+            ["3 pieces", "75%", "×0.75", "×1.5", "+5.25"],
+            ["4 pieces (Full Set)", "100%", "×1.00", "×1.0 (base)", "+7.00"]
+        ],
+        scalingHighlight: 3,
+        // Patterns
+        patternsDesc: "There are 18 unique trim patterns. Each one grants a distinct set of abilities. You must complete the Unlock Quest before a trim's power activates. After unlocking, equip armor trimmed with that pattern to gain its abilities.",
+        bolt: "Bolt", boltTask: "Defeat 50 Breezes & clear 10 Trial Spawners.", boltAb: "Channels electric energy from the Trial Chambers. Grants the 'Lightning Dash' — drop a Copper Ingot to dash forward through enemies, dealing shock damage along the path. On melee attack, strikes lightning at the target's position. Emits crackling spark particles at all times.", boltAct: "Drop Copper Ingot / Melee Hit", boltCd: "5s Dash / 5s Strike",
+        coast: "Coast", coastTask: "Fish 100 items from the sea.", coastAb: "Connects you with the ocean. Drop a fish item to launch it as a projectile dealing scaled damage. Grants Luck II near Shipwreck structures. Double-shot chance on arrow/trident projectiles. Emits ambient ash particles.", coastAct: "Drop Fish Item", coastCd: "Instant",
+        dune: "Dune", duneTask: "Spend 30 minutes in desert biomes.", duneAb: "Embodies desert endurance. Drop Sand to create a Sandstorm — a swirling vortex that Blinds and Slows enemies while granting you Speed and Regen inside it. Sprinting on sand/sandstone gives a speed boost. Drinking water potions restores hunger. Emits falling sand particles.", duneAct: "Drop Sand / Sprint on Sand / Drink Water", duneCd: "Instant / Passive",
+        eye: "Eye", eyeTask: "Defeat 50 Silverfish.", eyeAb: "Taps into Stronghold power. Sneak to reveal ALL entities within 20 blocks with Glowing. Use a Spyglass to mark entities at 32 blocks. Sneak+Sprint+Ground triggers Eye Warp — teleport where you're looking (up to 30 blocks). Emits glow particles.", eyeAct: "Sneak / Spyglass / Sneak+Sprint", eyeCd: "Passive / 7.5s Warp",
+        flow: "Flow", flowTask: "Survive 5 Ominous Trials.", flowAb: "Harnesses chaotic wind. Sneak+Jump triggers Wind Burst — a massive AoE knockback that launches all nearby entities away. Grants Water Breathing upon entering water. Inside Trial Chambers, grants Jump Boost. Emits wind particles.", flowAct: "Sneak + Jump", flowCd: "2.5s",
+        host: "Host", hostTask: "Cure 10 Zombie Villagers.", hostAb: "Resonates with protective village spirits. When health is critical, auto-triggers 'Resort' — heals 10HP and grants Resistance III for 3 seconds. Nearby allies receive Regeneration and Resistance aura. Near Villagers/Iron Golems, boosts max health. Emits crimson spores.", hostAct: "Passive / Auto on low HP", hostCd: "60s Resort",
+        raiser: "Raiser", raiserTask: "Enchant 50 items.", raiserAb: "Mastery over enchantments. Acts as an XP magnet, pulling all nearby experience orbs to you. Melee attacks launch enemies into the air. Drop XP Bottles to spray orbs in a cone. High XP levels unlock the 'Piercer' charge attack. Emits enchanting particles.", raiserAct: "Passive XP Pull / Melee / Drop XP Bottle", raiserCd: "Passive / Instant",
+        rib: "Rib", ribTask: "Spend 10 minutes submerged in Nether lava.", ribAb: "Forged in Nether fire. Melee attacks apply Wither for up to 8 seconds. Drop Wither Skeleton Skulls to launch Wither Skull projectiles. Provides thermal protection and Wither cleanse. Deflects Ghast fireballs. Emits flame particles.", ribAct: "Melee Hit / Drop Wither Skull", ribCd: "Instant",
+        sentry: "Sentry", sentryTask: "Win 5 village Raids.", sentryAb: "Embodies unyielding defense. Automatically clears Slowness and Poison. Projectile damage multiplied significantly (further boosted near Villagers). While blocking, reflects incoming projectiles back at the attacker. Grants defense buffs against Illagers. Emits enchanted hit particles.", sentryAct: "Passive / Block with Shield", sentryCd: "Passive",
+        shaper: "Shaper", shaperTask: "Survive 20 TNT explosions.", shaperAb: "Born from explosive chaos. COMPLETE IMMUNITY to all explosion damage (TNT, Creepers, Beds). Melee attacks apply Weakness. Drop TNT to throw it as a combat projectile. Absorbing fall damage or hits empowers retaliatory attacks. Emits thick smoke particles.", shaperAct: "Passive Immunity / Drop TNT / Melee", shaperCd: "Passive",
+        silence: "Silence", silenceTask: "Defeat 5 Wardens.", silenceAb: "The terrifying power of the Deep Dark. Sneaking behind enemies triggers Assassination — deals massive Sonic Boom bonus damage with Slowness II and Weakness I. Afflicts all nearby players with Darkness aura. Entering Deep Dark biome applies Weakness to enemies. Emits sculk soul particles.", silenceAct: "Backstab (Sneak behind) / Passive Aura", silenceCd: "Instant / 1.5s Aura",
+        snout: "Snout", snoutTask: "Trade 100 times with Piglins.", snoutAb: "Channels Piglin nature. Piglins will never attack you (auto-cleared targeting). Melee attacks set enemies on fire for 2-8 seconds. Auto-clears Wither effect from you. Grants Fire Resistance while riding mounts. Emits ambient lava particles.", snoutAct: "Passive / Melee Hit", snoutCd: "Passive",
+        spire: "Spire", spireTask: "Defeat 1 Ender Dragon.", spireAb: "Anti-gravity magic from End Cities. Sneak+Jump launches you high into the air (1.8× velocity). Creates a Weightless Field — nearby mobs float upward. Landing from heights triggers a devastating ground-pound shockwave. Negates fall damage. Emits end-rod particles.", spireAct: "Sneak + Jump / Landing Impact", spireCd: "2.5s Leap",
+        tide: "Tide", tideTask: "Swim 10,000 blocks.", tideAb: "Power of the Ocean Monument. Grants Regeneration in water and rain. Builds 'Reservoir' stacks while swimming (faster in Monuments). Stacks enhance combat. Trident damage amplified underwater. Drop fish near water for splash attacks. Emits bubble particles.", tideAct: "Passive in Water / Drop Fish", tideCd: "3s Wave",
+        vex: "Vex", vexTask: "Defeat 500 various mobs.", vexAb: "Mischievous Woodland energy. Sprint+Attack triggers Vex Lunge — dash forward at high speed. Kill streaks grant escalating Speed and Strength buffs (up to 5 stacks). Enhanced mobility across the battlefield. Emits soul particles.", vexAct: "Sprint + Attack", vexCd: "2s Lunge",
+        ward: "Ward", wardTask: "Block 1,000 incoming damage with a shield.", wardAb: "Ancient unbreakable defense. Blocking with a shield charges Kinetic Energy from absorbed damage — release for devastating AoE. Sneak+Block grants Resistance (up to III) with Slowness trade-off. Critical HP auto-triggers 'Resort' — heals 10HP + Resistance III. Emits enchanted particles.", wardAct: "Block + Release / Sneak+Block / Auto", wardCd: "60s Resort",
+        wayfinder: "Wayfinder", wayfinderTask: "Walk 100,000 blocks.", wayfinderAb: "The ultimate explorer's trim. Drop a Compass while sneaking to teleport to world spawn (with Regeneration). 'Void Return' — if you fall below the world, auto-teleport to Y=319 with Slow Falling. Compass tracking shows structures. Grapple and locate features. Emits portal particles.", wayfinderAct: "Drop Compass (Sneaking) / Auto Void Save", wayfinderCd: "30s Recall / 30s Void",
+        wild: "Wild", wildTask: "Breed and tame 100 animals.", wildAb: "Harmony with nature. Standing on grass/dirt grants Haste and Saturation every 2 seconds. Powerful taming buffs make your wolves and pets stronger and more resilient. Vine traps ensnare enemies. Nature-themed combat enhancements. Emits happy villager particles.", wildAct: "Passive on Grass", wildCd: "2s tick",
+        // Materials
+        diamond: "Diamond", diamondStat: "+7.0 Armor Toughness (per piece at full set)",
+        iron: "Iron", ironStat: "+5.0 Armor (per piece at full set)",
+        gold: "Gold", goldStat: "+40% Attack Speed (per piece at full set)",
+        emerald: "Emerald", emeraldStat: "+5.0 Luck (per piece at full set)",
+        lapis: "Lapis Lazuli", lapisStat: "+0.025 Movement Speed (per piece at full set)",
+        redstone: "Redstone", redstoneStat: "+6.0 Max Health (per piece at full set)",
+        quartz: "Quartz", quartzStat: "+3.0 Attack Damage (per piece at full set)",
+        netherite: "Netherite", netheriteStat: "+5.50 Toughness & +3.50 Armor (per piece at full set)",
+        copper: "Copper", copperStat: "+0.2 Knockback Resistance (per piece at full set)",
+        amethyst: "Amethyst", amethystStat: "Cosmetic only — unique transition particles when swapping armor.",
+        dragon_egg: "Dragon Egg", dragonStat: "Wildcard: Copies the majority material's stats. Use to complete sets without finding 4 of the same material.",
+        materialsDesc: "Each material provides a specific stat bonus. Stats scale linearly: 1 piece = 25%, 4 pieces = 100%. Values shown are at full 4-piece set. Dragon Egg acts as a wildcard, copying the majority material.",
+        // Empowerment descriptions
+        empDesc: "When you match a trim pattern with its specific Empowerment Material, the trim's abilities are massively upgraded. Each trim has exactly one signature material that unlocks its empowered form.",
+        emp_bolt: { mat: "Copper", trim: "Bolt", effect: "Chain lightning damage doubles. Chain targets increase from 3 to 6 enemies. The Lightning Dash electrocutes everything in its path." },
+        emp_coast: { mat: "Emerald", trim: "Coast", effect: "Fish projectile power is doubled (effectiveCount × 2). Treasure map discovery speed increased. Water breathing time doubled near Shipwrecks." },
+        emp_dune: { mat: "Iron", trim: "Dune", effect: "Sandstorm replaces Blindness with Wither I (60 ticks). Enemies caught in the storm slowly wither away instead of just being blinded." },
+        emp_eye: { mat: "Ender Eye", trim: "Eye", effect: "Reveal range doubles to 40 blocks. Revealed enemies are paralyzed with Slowness 255 (complete freeze) for 3 seconds. Nothing can hide from you." },
+        emp_flow: { mat: "Breeze Rod", trim: "Flow", effect: "Wind Burst knockback power doubles. The wind barrier becomes an impenetrable wall that deflects ALL projectiles back at the attacker." },
+        emp_host: { mat: "Redstone", trim: "Host", effect: "All ally buff durations double (60→120 ticks). The Guardian spirit persists twice as long and targets multiple enemies with its laser." },
+        emp_raiser: { mat: "Lapis Lazuli", trim: "Raiser", effect: "Melee launch attacks heal you for (raiserCount × 0.5) HP and deal (raiserCount × 1.5) bonus magic damage that ignores 50% of armor." },
+        emp_rib: { mat: "Blaze Powder", trim: "Rib", effect: "You gain Fire Resistance for 3 seconds on every hit. Targets are set on fire for (ribCount × 3) seconds. Fire becomes your ally." },
+        emp_sentry: { mat: "Diamond", trim: "Sentry", effect: "Projectile damage bonus is doubled. Piercing bolts go through multiple enemies and break shields. Near Villagers, damage quadruples." },
+        emp_shaper: { mat: "Gunpowder", trim: "Shaper", effect: "Explosions now HEAL you for 50% of the blocked damage. Your retaliatory attacks deal AoE blast damage to all nearby enemies." },
+        emp_silence: { mat: "Echo Shard", trim: "Silence", effect: "Backstab damage triples (3.5→10.5 per piece). Adds Wither II for 5 seconds. Darkness aura now also deals 2.0 sonic boom damage every 1.5s." },
+        emp_snout: { mat: "Gold", trim: "Snout", effect: "Piglins become permanent allies — they actively target and attack anyone who hits you. A personal Piglin army." },
+        emp_spire: { mat: "Shulker Shell", trim: "Spire", effect: "Weightless Field velocity doubles. You gain permanent Slow Falling (glide ability). Plunger attack shockwave radius massively increased." },
+        emp_tide: { mat: "Heart of the Sea", trim: "Tide", effect: "Permanent Dolphin's Grace + Conduit Power while in water. No underwater mining speed penalty. You become the apex ocean predator." },
+        emp_vex: { mat: "Quartz", trim: "Vex", effect: "Lunge velocity doubles (2.0→4.0). Grants 2 seconds of Invisibility after each lunge. Phase through enemies like a true Vex." },
+        emp_ward: { mat: "Netherite", trim: "Ward", effect: "While blocking, 100% of melee damage is reflected back as Thorns damage. Combined with Kinetic Charge, you become an immovable fortress." },
+        emp_wayfinder: { mat: "Nether Star", trim: "Wayfinder", effect: "Void Return activates with just 1 piece (normally 2). Heals 20HP (10 hearts) upon rescue. Works like a Totem of Undying against the void." },
+        emp_wild: { mat: "Nautilus Shell", trim: "Wild", effect: "Standing on grass grants Regeneration II + Strength I (60 ticks) in addition to Haste/Saturation. Your pets and tamed wolves gain extreme resilience." },
+        // Commands
+        cmdContent: `<div class="info-box">
+            <h3>/unlocktrimpower</h3>
+            <p>Admin command to unlock trim abilities for players. Requires OP level 2.</p>
+            <div class="cmd-box">/unlocktrimpower &lt;player&gt; full</div>
+            <p style="margin-top:0.5rem">Unlocks ALL trim pattern powers and material ownerships for the player.</p>
+            <div class="cmd-box">/unlocktrimpower &lt;player&gt; part</div>
+            <p style="margin-top:0.5rem">Unlocks one random missing trim power for the player.</p>
+            <div class="cmd-box">/unlocktrimpower &lt;player&gt; &lt;trim_name&gt;</div>
+            <p style="margin-top:0.5rem">Unlocks a specific trim (e.g., <code>silence</code>, <code>ward</code>, <code>eye</code>).</p>
+        </div>
+        <div class="info-box">
+            <h3>/lunartrims</h3>
+            <p>Player-facing trim info commands.</p>
+            <div class="cmd-box">/lunartrims</div>
+            <p style="margin-top:0.5rem">Shows your current equipped trim info and power levels.</p>
+            <div class="cmd-box">/lunartrims info &lt;trim_name&gt;</div>
+            <p style="margin-top:0.5rem">Lookup detailed info for a specific material or pattern.</p>
+            <div class="cmd-box">/lunartrims list</div>
+            <p style="margin-top:0.5rem">Lists all trim materials and patterns with their effects.</p>
+            <div class="cmd-box">/lunartrims enable | disable</div>
+            <p style="margin-top:0.5rem">(Admin) Toggles the trim system on/off globally.</p>
+            <div class="cmd-box">/lunartrims reload</div>
+            <p style="margin-top:0.5rem">(Admin) Force-refreshes all players' trim attributes.</p>
+        </div>`,
+        footer: "Lunar Economy Mod — Armor Trims Overhaul v2.0 — 2025"
+    },
+    vi: {
+        title: "Wiki Tổng Quan Armor Trims",
+        subtitle: "Hướng dẫn toàn tập về Kỹ Năng Trim, Nhiệm Vụ Mở Khóa, Chỉ Số Vật Liệu, Hệ Thống Cường Hóa & Cân Bằng Sức Mạnh",
+        overviewTitle: "Tổng Quan",
+        scalingTitle: "Cân Bằng Sức Mạnh",
+        patternsTitle: "Mẫu Trim & Kỹ Năng (18)",
+        materialsTitle: "Chỉ Số Vật Liệu & Kết Hợp (11)",
+        empTitle: "Vật Liệu Cường Hóa (18)",
+        cmdTitle: "Lệnh Quản Trị",
+        task: "Nhiệm Vụ Mở Khóa", ability: "Kỹ Năng", signature: "Hiệu Ứng Cường Hóa",
+        empowered: "Được Cường Hóa Bởi", stats: "Hiệu Ứng Đủ Bộ (4 mảnh)", activation: "Kích Hoạt", cooldown: "Hồi Chiêu", passive: "Bị Động",
+        overviewDesc: "Hệ thống Armor Trims Overhaul biến hệ thống trang trí trim của Minecraft thành hệ thống kỹ năng RPG hoàn chỉnh. Mỗi trong 18 mẫu trim cung cấp các kỹ năng chủ động và bị động độc đáo. Vật liệu cung cấp các bùa lợi chỉ số mạnh mẽ. Kết hợp trim với vật liệu cường hóa đặc trưng để mở khóa kỹ năng nâng cấp tàn phá.",
+        overviewBox: `<h3>Cách Hoạt Động</h3>
+            <ul>
+                <li><b>Trang bị giáp có trim</b> — Mỗi mảnh đều quan trọng! Nhiều mảnh hơn = mạnh hơn (25% mỗi mảnh).</li>
+                <li><b>Hoàn thành Nhiệm Vụ</b> — Mỗi mẫu trim yêu cầu một nhiệm vụ cụ thể để mở khóa kỹ năng.</li>
+                <li><b>Chọn Vật Liệu</b> — Các vật liệu khác nhau cung cấp các bùa lợi chỉ số khác nhau (sát thương, máu, tốc độ, v.v.).</li>
+                <li><b>Cường Hóa</b> — Sử dụng vật liệu đặc trưng với trim tương ứng để mở khóa kỹ năng cường hóa tối thượng.</li>
+                <li><b>Kết Hợp</b> — Bạn có thể kết hợp các trim và vật liệu khác nhau trên 4 mảnh giáp để tạo ra build lai.</li>
+                <li><b>Trứng Rồng</b> — Vật liệu đa năng tự động sao chép vật liệu chính, giúp bạn hoàn thành bộ.</li>
+            </ul>`,
+        scalingDesc: "Tất cả kỹ năng trim và bùa lợi chỉ số đều tăng theo số lượng mảnh giáp được trang bị với mẫu hoặc vật liệu đó. Càng nhiều mảnh, hiệu ứng càng mạnh.",
+        scalingHeaders: ["Số Mảnh", "Mức Sức Mạnh", "Hệ Số Chỉ Số", "Hệ Số Hồi Chiêu", "Ví Dụ: Kim Cương"],
+        scalingRows: [
+            ["1 mảnh", "25%", "×0.25", "×2.5 (lâu hơn)", "+1.75"],
+            ["2 mảnh", "50%", "×0.50", "×2.0", "+3.50"],
+            ["3 mảnh", "75%", "×0.75", "×1.5", "+5.25"],
+            ["4 mảnh (Đủ Bộ)", "100%", "×1.00", "×1.0 (cơ bản)", "+7.00"]
+        ],
+        scalingHighlight: 3,
+        patternsDesc: "Có 18 mẫu trim độc đáo. Mỗi mẫu cung cấp một bộ kỹ năng riêng biệt. Bạn phải hoàn thành Nhiệm Vụ Mở Khóa trước khi sức mạnh của trim được kích hoạt. Sau khi mở khóa, trang bị giáp có trim để nhận kỹ năng.",
+        bolt: "Bolt (Tia chớp)", boltTask: "Đánh bại 50 Breeze & vượt qua 10 Trial Spawner.", boltAb: "Hội tụ năng lượng điện từ Trial Chambers. Thả Copper Ingot để kích hoạt 'Lướt Tia Chớp' — lao qua kẻ thù gây sát thương giật điện. Đánh cận chiến triệu hồi sét tại vị trí mục tiêu. Phát ra tia lửa điện liên tục.", boltAct: "Thả Copper Ingot / Đánh cận chiến", boltCd: "5s Lướt / 5s Sét",
+        coast: "Coast (Bờ biển)", coastTask: "Câu 100 vật phẩm từ biển.", coastAb: "Kết nối với đại dương. Thả cá để phóng như đạn gây sát thương. Ban May Mắn II gần Tàu Đắm. Tỉ lệ bắn đôi với cung/đinh ba. Phát ra hạt tro.", coastAct: "Thả Cá", coastCd: "Tức thì",
+        dune: "Dune (Đồi cát)", duneTask: "Dành 30 phút trong sa mạc.", duneAb: "Sức bền sa mạc. Thả Cát để tạo Bão Cát — lốc xoáy gây Mù và Chậm cho kẻ thù, tăng Tốc Độ và Hồi Máu cho bạn. Chạy trên cát được tăng tốc. Uống nước hồi đói. Phát ra hạt cát.", duneAct: "Thả Cát / Chạy trên cát / Uống nước", duneCd: "Tức thì / Bị động",
+        eye: "Eye (Con mắt)", eyeTask: "Tiêu diệt 50 Silverfish.", eyeAb: "Sức mạnh Stronghold. Ngồi để phát sáng TẤT CẢ thực thể trong 20 blocks. Dùng Kính Viễn Vọng đánh dấu ở 32 blocks. Ngồi+Chạy+Đứng kích hoạt Eye Warp — dịch chuyển tới nơi nhìn (tối đa 30 blocks). Phát ra hạt phát sáng.", eyeAct: "Ngồi / Kính Viễn Vọng / Ngồi+Chạy", eyeCd: "Bị động / 7.5s Warp",
+        flow: "Flow (Dòng chảy)", flowTask: "Sống sót qua 5 Ominous Trials.", flowAb: "Gió hỗn loạn. Ngồi+Nhảy kích hoạt Wind Burst — đánh bay tất cả thực thể xung quanh. Ban Thở Dưới Nước khi vào nước. Trong Trial Chambers, ban Nhảy Cao. Phát ra hạt gió.", flowAct: "Ngồi + Nhảy", flowCd: "2.5s",
+        host: "Host (Vật chủ)", hostTask: "Chữa 10 Dân làng Zombie.", hostAb: "Tinh thần bảo vệ làng. Máu nguy hiểm tự kích hoạt 'Resort' — hồi 10HP + Kháng III trong 3s. Đồng minh gần nhận hào quang Hồi Máu và Kháng. Gần Dân làng/Iron Golem tăng máu tối đa. Phát ra bào tử đỏ.", hostAct: "Bị động / Tự động khi máu thấp", hostCd: "60s Resort",
+        raiser: "Raiser (Người nâng)", raiserTask: "Phù phép 50 vật phẩm.", raiserAb: "Thông thạo phù phép. Nam châm XP tự động hút kinh nghiệm. Đánh cận chiến đẩy kẻ thù lên trời. Thả Chai XP phun quả cầu. Cấp XP cao mở khóa đòn 'Piercer'. Phát ra hạt phù phép.", raiserAct: "Bị động / Đánh cận chiến / Thả Chai XP", raiserCd: "Bị động / Tức thì",
+        rib: "Rib (Xương sườn)", ribTask: "Ngâm 10 phút trong dung nham Nether.", ribAb: "Rèn trong lửa Nether. Đánh cận chiến gây Wither tới 8s. Thả Đầu Lâu Wither để phóng đạn Wither Skull. Bảo vệ nhiệt và thanh tẩy Wither. Phản xạ quả cầu lửa Ghast. Phát ra hạt lửa.", ribAct: "Đánh cận chiến / Thả Đầu Lâu", ribCd: "Tức thì",
+        sentry: "Sentry (Lính canh)", sentryTask: "Thắng 5 Raid.", sentryAb: "Phòng thủ kiên cường. Tự xóa Chậm và Độc. Sát thương đạn tăng mạnh (gần Dân làng tăng thêm). Đỡ khiên phản đạn về kẻ tấn công. Bùa phòng thủ chống Illager. Phát ra hạt phù phép.", sentryAct: "Bị động / Đỡ bằng Khiên", sentryCd: "Bị động",
+        shaper: "Shaper (Người tạo hình)", shaperTask: "Sống sót 20 vụ nổ TNT.", shaperAb: "Sinh từ hỗn loạn. MIỄN NHIỄM hoàn toàn sát thương nổ (TNT, Creeper, Giường). Đánh cận chiến gây Yếu. Thả TNT để ném như đạn. Hấp thụ sát thương tăng đòn trả đũa. Phát ra hạt khói.", shaperAct: "Bị động / Thả TNT / Đánh cận chiến", shaperCd: "Bị động",
+        silence: "Silence (Im lặng)", silenceTask: "Tiêu diệt 5 Warden.", silenceAb: "Sức mạnh Deep Dark. Lén phía sau kẻ thù kích hoạt Ám Sát — sát thương Sonic Boom khổng lồ + Chậm II + Yếu I. Hào quang Bóng Tối gây ảnh hưởng người chơi gần. Trong Deep Dark, kẻ thù bị Yếu. Phát ra hồn sculk.", silenceAct: "Đâm lén (Ngồi phía sau) / Hào quang", silenceCd: "Tức thì / 1.5s Hào quang",
+        snout: "Snout (Mõm)", snoutTask: "Giao dịch 100 lần với Piglin.", snoutAb: "Bản chất Piglin. Piglin không bao giờ tấn công bạn. Đánh cận chiến đốt kẻ thù 2-8s. Tự xóa Wither. Cưỡi thú được Kháng Lửa. Phát ra hạt dung nham.", snoutAct: "Bị động / Đánh cận chiến", snoutCd: "Bị động",
+        spire: "Spire (Ngọn tháp)", spireTask: "Tiêu diệt 1 Rồng Ender.", spireAb: "Ma thuật chống trọng lực End Cities. Ngồi+Nhảy phóng bạn lên cao (1.8× vận tốc). Tạo Trường Không Trọng Lực — quái vật gần bay lên. Hạ cánh từ cao gây sóng xung kích. Vô hiệu sát thương rơi. Phát ra hạt end-rod.", spireAct: "Ngồi + Nhảy / Hạ cánh", spireCd: "2.5s Nhảy",
+        tide: "Tide (Thủy triều)", tideTask: "Bơi 10,000 blocks.", tideAb: "Sức mạnh Ocean Monument. Ban Hồi Máu trong nước và mưa. Tích 'Reservoir' khi bơi (nhanh hơn trong Monument). Sát thương Đinh ba tăng dưới nước. Thả cá gần nước tạo đợt tấn công. Phát ra bong bóng.", tideAct: "Bị động trong nước / Thả cá", tideCd: "3s Sóng",
+        vex: "Vex (Tinh nghịch)", vexTask: "Tiêu diệt 500 quái vật.", vexAb: "Năng lượng Woodland. Chạy+Đánh kích hoạt Vex Lunge — lao tới tốc độ cao. Chuỗi giết tăng Tốc Độ và Sức Mạnh (tối đa 5 cộng dồn). Tăng cường cơ động chiến trường. Phát ra hạt linh hồn.", vexAct: "Chạy + Đánh", vexCd: "2s Lao",
+        ward: "Ward (Bảo hộ)", wardTask: "Đỡ 1,000 sát thương bằng khiên.", wardAb: "Phòng thủ cổ xưa. Đỡ khiên tích Năng Lượng Động Học — thả ra gây AoE tàn phá. Ngồi+Đỡ ban Kháng (tới III) đổi Chậm. Máu nguy hiểm tự kích hoạt 'Resort' — hồi 10HP + Kháng III. Phát ra hạt phù phép.", wardAct: "Đỡ + Thả / Ngồi+Đỡ / Tự động", wardCd: "60s Resort",
+        wayfinder: "Wayfinder (Người dò đường)", wayfinderTask: "Đi bộ 100,000 blocks.", wayfinderAb: "Trim nhà thám hiểm. Thả La Bàn khi ngồi để dịch chuyển về spawn (có Hồi Máu). 'Void Return' — rơi khỏi thế giới tự dịch chuyển lên Y=319 với Rơi Chậm. La bàn theo dõi cấu trúc. Phát ra hạt cổng.", wayfinderAct: "Thả La Bàn (Ngồi) / Tự động cứu Void", wayfinderCd: "30s Triệu hồi / 30s Void",
+        wild: "Wild (Hoang dã)", wildTask: "Nhân giống và thu phục 100 động vật.", wildAb: "Hài hòa thiên nhiên. Đứng trên cỏ/đất ban Haste và Saturation mỗi 2s. Bùa lợi thu phục cực mạnh cho sói và thú cưng. Bẫy dây leo bắt kẻ thù. Tăng cường chiến đấu thiên nhiên. Phát ra hạt dân làng vui.", wildAct: "Bị động trên cỏ", wildCd: "Mỗi 2s",
+        diamond: "Kim cương", diamondStat: "+7.0 Độ cứng giáp (mỗi mảnh đủ bộ)",
+        iron: "Sắt", ironStat: "+5.0 Giáp (mỗi mảnh đủ bộ)",
+        gold: "Vàng", goldStat: "+40% Tốc độ đánh (mỗi mảnh đủ bộ)",
+        emerald: "Ngọc lục bảo", emeraldStat: "+5.0 May mắn (mỗi mảnh đủ bộ)",
+        lapis: "Ngọc lưu ly", lapisStat: "+0.025 Tốc độ di chuyển (mỗi mảnh đủ bộ)",
+        redstone: "Đá đỏ", redstoneStat: "+6.0 Máu tối đa (mỗi mảnh đủ bộ)",
+        quartz: "Thạch anh", quartzStat: "+3.0 Sát thương (mỗi mảnh đủ bộ)",
+        netherite: "Netherite", netheriteStat: "+5.50 Độ cứng & +3.50 Giáp (mỗi mảnh đủ bộ)",
+        copper: "Đồng", copperStat: "+0.2 Kháng bật lùi (mỗi mảnh đủ bộ)",
+        amethyst: "Thạch anh tím", amethystStat: "Trang trí — hiệu ứng hạt chuyển đổi trang bị đẹp mắt.",
+        dragon_egg: "Trứng rồng", dragonStat: "Đa năng: Sao chép chỉ số vật liệu chính. Dùng để hoàn thành bộ mà không cần tìm đủ 4 cùng loại.",
+        materialsDesc: "Mỗi vật liệu cung cấp một bùa lợi chỉ số cụ thể. Chỉ số tăng tuyến tính: 1 mảnh = 25%, 4 mảnh = 100%. Giá trị hiển thị là đủ bộ 4 mảnh. Trứng Rồng là đa năng, sao chép vật liệu chính.",
+        empDesc: "Khi bạn kết hợp mẫu trim với Vật Liệu Cường Hóa đặc trưng, kỹ năng của trim được nâng cấp cực mạnh. Mỗi trim có đúng một vật liệu đặc trưng mở khóa dạng cường hóa.",
+        emp_bolt: { mat: "Đồng", trim: "Bolt", effect: "Sát thương sét dây chuyền gấp đôi. Mục tiêu dây chuyền tăng từ 3 lên 6. Lướt Tia Chớp giật điện mọi thứ trên đường đi." },
+        emp_coast: { mat: "Ngọc lục bảo", trim: "Coast", effect: "Sức mạnh đạn cá gấp đôi. Tốc độ tìm bản đồ kho báu tăng. Thời gian thở dưới nước gấp đôi gần Tàu Đắm." },
+        emp_dune: { mat: "Sắt", trim: "Dune", effect: "Bão Cát thay Mù bằng Wither I (60 tick). Kẻ thù trong bão từ từ khô héo thay vì chỉ bị mù." },
+        emp_eye: { mat: "Mắt Ender", trim: "Eye", effect: "Phạm vi phát hiện gấp đôi lên 40 blocks. Kẻ thù bị tê liệt với Chậm 255 (đóng băng hoàn toàn) trong 3s." },
+        emp_flow: { mat: "Gậy Gió", trim: "Flow", effect: "Sức đẩy Wind Burst gấp đôi. Lá chắn gió trở thành tường bất khả xâm phạm phản đòn TẤT CẢ đạn." },
+        emp_host: { mat: "Đá đỏ", trim: "Host", effect: "Thời gian bùa lợi đồng minh gấp đôi (60→120 tick). Linh hồn Guardian tồn tại lâu gấp đôi và nhắm nhiều mục tiêu." },
+        emp_raiser: { mat: "Ngọc lưu ly", trim: "Raiser", effect: "Đòn đẩy hồi máu (raiserCount × 0.5) HP và gây (raiserCount × 1.5) sát thương ma thuật bỏ qua 50% giáp." },
+        emp_rib: { mat: "Bột quỷ lửa", trim: "Rib", effect: "Nhận Kháng Lửa 3s mỗi đòn đánh. Mục tiêu bị đốt (ribCount × 3) giây. Lửa trở thành đồng minh." },
+        emp_sentry: { mat: "Kim cương", trim: "Sentry", effect: "Sát thương đạn gấp đôi. Đạn xuyên nhiều kẻ thù và phá khiên. Gần Dân làng, sát thương gấp bốn." },
+        emp_shaper: { mat: "Thuốc súng", trim: "Shaper", effect: "Vụ nổ HỒI MÁU cho bạn 50% sát thương bị chặn. Đòn trả đũa gây sát thương nổ diện rộng." },
+        emp_silence: { mat: "Mảnh tiếng vọng", trim: "Silence", effect: "Sát thương đâm lén gấp ba (3.5→10.5 mỗi mảnh). Thêm Wither II trong 5s. Hào quang Bóng Tối gây 2.0 sát thương sóng âm mỗi 1.5s." },
+        emp_snout: { mat: "Vàng", trim: "Snout", effect: "Piglin trở thành đồng minh vĩnh viễn — chủ động tấn công bất cứ ai đánh bạn. Đội quân Piglin cá nhân." },
+        emp_spire: { mat: "Vỏ Shulker", trim: "Spire", effect: "Vận tốc Trường Không Trọng Lực gấp đôi. Nhận Rơi Chậm vĩnh viễn (lượn). Bán kính sóng xung kích tăng cực mạnh." },
+        emp_tide: { mat: "Trái tim biển", trim: "Tide", effect: "Dolphin's Grace + Conduit Power vĩnh viễn trong nước. Không bị phạt tốc độ đào dưới nước. Trở thành kẻ săn mồi tối thượng đại dương." },
+        emp_vex: { mat: "Thạch anh", trim: "Vex", effect: "Vận tốc lao gấp đôi (2.0→4.0). Ban 2s Tàng Hình sau mỗi cú lao. Xuyên qua kẻ thù như Vex thật." },
+        emp_ward: { mat: "Netherite", trim: "Ward", effect: "Khi đỡ, 100% sát thương cận chiến phản lại dưới dạng Thorns. Kết hợp Năng Lượng Động Học, trở thành pháo đài bất động." },
+        emp_wayfinder: { mat: "Sao Nether", trim: "Wayfinder", effect: "Void Return kích hoạt chỉ cần 1 mảnh (thường 2). Hồi 20HP (10 trái tim) khi được cứu. Như Totem Bất Tử chống void." },
+        emp_wild: { mat: "Vỏ ốc anh vũ", trim: "Wild", effect: "Đứng trên cỏ ban Hồi Máu II + Sức Mạnh I (60 tick) ngoài Haste/Saturation. Thú cưng và sói đã thuần hóa cực kỳ kiên cường." },
+        cmdContent: `<div class="info-box">
+            <h3>/unlocktrimpower</h3>
+            <p>Lệnh quản trị để mở khóa kỹ năng trim cho người chơi. Yêu cầu quyền OP cấp 2.</p>
+            <div class="cmd-box">/unlocktrimpower &lt;người_chơi&gt; full</div>
+            <p style="margin-top:0.5rem">Mở khóa TẤT CẢ sức mạnh trim và quyền sở hữu vật liệu cho người chơi.</p>
+            <div class="cmd-box">/unlocktrimpower &lt;người_chơi&gt; part</div>
+            <p style="margin-top:0.5rem">Mở khóa một sức mạnh trim ngẫu nhiên còn thiếu.</p>
+            <div class="cmd-box">/unlocktrimpower &lt;người_chơi&gt; &lt;tên_trim&gt;</div>
+            <p style="margin-top:0.5rem">Mở khóa một trim cụ thể (vd: <code>silence</code>, <code>ward</code>, <code>eye</code>).</p>
+        </div>
+        <div class="info-box">
+            <h3>/lunartrims</h3>
+            <p>Lệnh thông tin trim cho người chơi.</p>
+            <div class="cmd-box">/lunartrims</div>
+            <p style="margin-top:0.5rem">Hiển thị thông tin trim hiện tại và mức sức mạnh.</p>
+            <div class="cmd-box">/lunartrims info &lt;tên_trim&gt;</div>
+            <p style="margin-top:0.5rem">Tra cứu chi tiết vật liệu hoặc mẫu cụ thể.</p>
+            <div class="cmd-box">/lunartrims list</div>
+            <p style="margin-top:0.5rem">Liệt kê tất cả vật liệu và mẫu trim.</p>
+            <div class="cmd-box">/lunartrims enable | disable</div>
+            <p style="margin-top:0.5rem">(Quản trị) Bật/tắt hệ thống trim toàn cầu.</p>
+            <div class="cmd-box">/lunartrims reload</div>
+            <p style="margin-top:0.5rem">(Quản trị) Làm mới chỉ số trim tất cả người chơi.</p>
+        </div>`,
+        footer: "Lunar Economy Mod — Hệ Thống Armor Trims Overhaul v2.0 — 2025"
+    }
+};
+
+const patterns = [
+    { id: "bolt" }, { id: "coast" }, { id: "dune" }, { id: "eye" },
+    { id: "flow" }, { id: "host" }, { id: "raiser" }, { id: "rib" },
+    { id: "sentry" }, { id: "shaper" }, { id: "silence" }, { id: "snout" },
+    { id: "spire" }, { id: "tide" }, { id: "vex" }, { id: "ward" },
+    { id: "wayfinder" }, { id: "wild" }
+];
+
+const materials = [
+    { id: "diamond", icon: "item/diamond" }, { id: "iron", icon: "item/iron_ingot" },
+    { id: "gold", icon: "item/gold_ingot" }, { id: "emerald", icon: "item/emerald" },
+    { id: "lapis", icon: "item/lapis_lazuli" }, { id: "redstone", icon: "item/redstone" },
+    { id: "quartz", icon: "item/quartz" }, { id: "netherite", icon: "item/netherite_ingot" },
+    { id: "copper", icon: "item/copper_ingot" }, { id: "amethyst", icon: "item/amethyst_shard" },
+    { id: "dragon_egg", icon: "block/dragon_egg" }
+];
+
+const empowerments = [
+    "bolt", "coast", "dune", "eye", "flow", "host", "raiser", "rib",
+    "sentry", "shaper", "silence", "snout", "spire", "tide", "vex", "ward",
+    "wayfinder", "wild"
+];
+
+let currentLang = 'en';
+
+function render() {
+    const t = i18n[currentLang];
+    document.getElementById('title').innerText = t.title;
+    document.getElementById('subtitle').innerText = t.subtitle;
+    document.getElementById('overview-title').innerText = t.overviewTitle;
+    document.getElementById('scaling-title').innerText = t.scalingTitle;
+    document.getElementById('patterns-title').innerText = t.patternsTitle;
+    document.getElementById('materials-title').innerText = t.materialsTitle;
+    document.getElementById('emp-title').innerText = t.empTitle;
+    document.getElementById('cmd-title').innerText = t.cmdTitle;
+    document.getElementById('footer-text').innerText = t.footer;
+
+    // Overview
+    document.getElementById('overview-desc').innerText = t.overviewDesc;
+    document.getElementById('overview-box').innerHTML = t.overviewBox;
+
+    // Scaling
+    document.getElementById('scaling-desc').innerText = t.scalingDesc;
+    let tableHtml = '<table class="scale-table"><thead><tr>';
+    t.scalingHeaders.forEach(h => tableHtml += `<th>${h}</th>`);
+    tableHtml += '</tr></thead><tbody>';
+    t.scalingRows.forEach((row, i) => {
+        const cls = i === t.scalingHighlight ? ' class="highlight-row"' : '';
+        tableHtml += `<tr${cls}>`;
+        row.forEach(cell => tableHtml += `<td>${cell}</td>`);
+        tableHtml += '</tr>';
+    });
+    tableHtml += '</tbody></table>';
+    document.getElementById('scaling-table-wrap').innerHTML = tableHtml;
+
+    // Patterns
+    document.getElementById('patterns-desc').innerText = t.patternsDesc;
+    const pg = document.getElementById('patterns-grid');
+    pg.innerHTML = '';
+    patterns.forEach(p => {
+        const title = t[p.id];
+        const task = t[p.id + 'Task'];
+        const ability = t[p.id + 'Ab'];
+        const act = t[p.id + 'Act'] || t.passive;
+        const cd = t[p.id + 'Cd'] || t.passive;
+        const emp = t['emp_' + p.id];
+        pg.innerHTML += `
+            <div class="card">
+                <div class="card-header">
+                    <img class="trim-img" src="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.1/assets/minecraft/textures/item/${p.id}_armor_trim_smithing_template.png" alt="${title}" onerror="this.style.display='none'">
+                    <h3>${title}</h3>
+                </div>
+                <div class="badge">${t.task}</div>
+                <div class="info-row"><span class="info-value">${task}</span></div>
+                <div class="info-row">
+                    <span class="info-label">${t.ability}</span>
+                    <span class="info-value">${ability}</span>
+                </div>
+                <div style="margin-top:0.6rem;">
+                    <span class="activation-tag">${act}</span>
+                    <span class="cooldown-tag">${cd}</span>
+                </div>
+                <div class="divider">
+                    <div class="badge badge-emp">${t.signature}</div>
+                    <div class="info-value emp-text">${emp ? emp.mat + ' → ' + emp.effect : ''}</div>
+                </div>
+            </div>
+        `;
+    });
+
+    // Materials
+    document.getElementById('materials-desc').innerText = t.materialsDesc;
+    const mg = document.getElementById('materials-grid');
+    mg.innerHTML = '';
+    materials.forEach(m => {
+        const title = t[m.id];
+        const stat = t[m.id + 'Stat'];
+        mg.innerHTML += `
+            <div class="material-card">
+                <img class="mat-img" src="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.1/assets/minecraft/textures/${m.icon}.png" alt="${title}" onerror="this.style.display='none'">
+                <div>
+                    <h4 style="font-size:1.15rem;color:#fff;margin-bottom:0.2rem;">${title}</h4>
+                    <div class="sig-text">${t.stats}</div>
+                    <div class="sig-value" style="font-size:0.95rem;">${stat}</div>
+                </div>
+            </div>
+        `;
+    });
+
+    // Empowerments
+    document.getElementById('emp-desc').innerText = t.empDesc;
+    const eg = document.getElementById('emp-grid');
+    eg.innerHTML = '';
+    empowerments.forEach(id => {
+        const emp = t['emp_' + id];
+        if (!emp) return;
+        eg.innerHTML += `
+            <div class="emp-card">
+                <h4>${t[id]} + ${emp.mat}</h4>
+                <div class="emp-mat">${t.empowered}: <b>${emp.mat}</b></div>
+                <div class="emp-effect">${emp.effect}</div>
+            </div>
+        `;
+    });
+
+    // Commands
+    document.getElementById('cmd-content').innerHTML = t.cmdContent;
+}
+
+function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    render();
+}
+
+render();
+</script>
+</body>
+</html>
